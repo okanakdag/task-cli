@@ -1,3 +1,5 @@
+import enums.Status;
+
 import java.time.LocalDateTime;
 
 public class Task {
@@ -6,7 +8,7 @@ public class Task {
 
     private String description;
 
-    private String status;
+    private Status status;
 
     private final LocalDateTime createdAt;
 
@@ -16,7 +18,7 @@ public class Task {
     public Task(int id, String description) {
         this.id = id;
         this.description = description;
-        this.status = "New";
+        this.status = Status.TODO;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
@@ -25,20 +27,23 @@ public class Task {
     public Task(int id, String description, String status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.description = description;
-        this.status = status;
+        this.status = Status.valueOf(status);
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    // doing as setter?
     public void updateStatus(String status) {
-        this.status = status;
+        this.status = Status.valueOf(status);
         this.updatedAt = LocalDateTime.now();
     }
 
     public void updateDescription(String description) {
         this.description = description;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public boolean isDone() {
+        return status == Status.DONE;
     }
 
     @Override
@@ -55,7 +60,7 @@ public class Task {
         return description;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
