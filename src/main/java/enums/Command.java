@@ -2,7 +2,7 @@ package enums;
 
 public enum Command {
     ADD("add", 2, 2),
-    UPDATE("update", 2, 2),
+    UPDATE("update", 3, 3),
     DELETE("delete", 2, 2),
     LIST("list", 1, 2),
     MARK_IN_PROGRESS("mark-in-progress", 2, 2),

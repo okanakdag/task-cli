@@ -27,7 +27,7 @@ public class TaskService {
 
     }
 
-    public void updateDescription(String id) {
+    public void updateDescription(String id, String description) {
     }
 
     public void deleteTask(String id) {

@@ -34,7 +34,7 @@ public class TaskCli {
                 taskService.addTask(args[1]);
                 break;
             case UPDATE:
-                taskService.updateDescription(args[1]);
+                taskService.updateDescription(args[1], args[2]);
                 break;
             case DELETE:
                 taskService.deleteTask(args[1]);
@@ -65,7 +65,7 @@ public class TaskCli {
             
             Commands:
               add <description>           Add a new task
-              update <id/description>     Update a task
+              update <id> <description>   Update a task
               delete <id>                 Delete a task
               list [status]               List all tasks or filter by status
               mark-in-progress <id>       Mark a task as in progress
