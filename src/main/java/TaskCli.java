@@ -3,45 +3,58 @@ import enums.Command;
 public class TaskCli {
 
     public static void main(String[] args) {
+        try {
+            parseCommand(args);
+        } catch(IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
-        if (args.length > 2 || args.length == 0) {
-            System.out.println("Usage: task-cli <command> [argument]\n" + "manual: task-cli help");
-        } else {
-            TaskService taskService = new TaskService();
-            Command command = Command.fromString(args[0]);
+    public static void parseCommand(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Missing command. Use: task-cli help");
+        }
+        if (args.length > 3) {
+            throw new IllegalArgumentException("Too many arguments. Use: task-cli help");
+        }
 
-            if (command.getMinArgs() > args.length) {
-                System.out.println("Missing arguments for command: " + args[0]);
-                return;
-            }
+        Command command = Command.fromString(args[0]);
 
-            switch (command) {
-                case ADD:
-                    taskService.addTask(args[1]);
-                    break;
-                case UPDATE:
-                    taskService.updateDescription(args[1]);
-                    break;
-                case DELETE:
-                    taskService.deleteTask(args[1]);
-                    break;
-                case LIST:
-                    if ((args.length == 2)) {
-                        taskService.list(args[1]);
-                    } else {
-                        taskService.list();
-                    }
-                    break;
-                case MARK_IN_PROGRESS:
-                    taskService.markInProgress(args[1]);
-                    break;
-                case MARK_DONE:
-                    taskService.markDone(args[1]);
-                    break;
-                case HELP:
-                    help();
-                    break;
-            }
+        if (command.getMinArgs() > args.length) {
+            throw new IllegalArgumentException("Missing arguments for command: " + args[0]);
+        }
+        if (command.getMaxArgs() < args.length) {
+            throw new IllegalArgumentException("Too many arguments for command: " + args[0]);
+        }
+
+        TaskService taskService = new TaskService();
+
+        switch (command) {
+            case ADD:
+                taskService.addTask(args[1]);
+                break;
+            case UPDATE:
+                taskService.updateDescription(args[1]);
+                break;
+            case DELETE:
+                taskService.deleteTask(args[1]);
+                break;
+            case LIST:
+                if ((args.length == 2)) {
+                    taskService.list(args[1]);
+                } else {
+                    taskService.list();
+                }
+                break;
+            case MARK_IN_PROGRESS:
+                taskService.markInProgress(args[1]);
+                break;
+            case MARK_DONE:
+                taskService.markDone(args[1]);
+                break;
+            case HELP:
+                help();
+                break;
         }
     }
 
