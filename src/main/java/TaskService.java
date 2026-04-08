@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 
+import repository.TaskRepository;
+
 public class TaskService {
     private ArrayList<Task> taskList;
-    private Storage storage;
+    private TaskRepository storage;
 
     public TaskService() {
         this.taskList = new ArrayList<Task>();
-        this.storage = new Storage();
+        this.storage = new TaskRepository();
         this.loadTaskList();
     }
 
