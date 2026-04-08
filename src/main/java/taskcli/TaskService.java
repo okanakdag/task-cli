@@ -1,6 +1,7 @@
+package taskcli;
 import java.util.ArrayList;
 
-import repository.TaskRepository;
+import taskcli.repository.TaskRepository;
 
 public class TaskService {
     private ArrayList<Task> taskList;

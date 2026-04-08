@@ -1,6 +1,7 @@
-import enums.Status;
-
+package taskcli;
 import java.time.LocalDateTime;
+
+import taskcli.enums.Status;
 
 public class Task {
 

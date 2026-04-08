@@ -1,4 +1,4 @@
-package enums;
+package taskcli.enums;
 
 public enum Command {
     ADD("add", 2, 2),

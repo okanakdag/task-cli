@@ -1,4 +1,5 @@
-import enums.Command;
+package taskcli;
+import taskcli.enums.Command;
 
 public class TaskCli {
 

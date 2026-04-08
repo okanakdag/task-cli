@@ -1,4 +1,4 @@
-package enums;
+package taskcli.enums;
 
 public enum Status {
     TODO("To do"),
