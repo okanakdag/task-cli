@@ -6,9 +6,9 @@ import taskcli.Task;
 
 public interface TaskRepository {
 
-    void addTask();
+    void addTask(Task task);
 
-    void deleteTaskById();
+    void deleteTaskById(int id);
 
     ArrayList<Task> loadTaskList();
 }
