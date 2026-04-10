@@ -24,15 +24,11 @@ public class TestRepository implements TaskRepository {
         tasks.add(task3);
     }
 
-    public void addTask(Task task) {
-        tasks.add(task);
-    }
-
-    public void deleteTaskById(int id) {
-        tasks.removeIf(task -> task.getId() == id);
-    }
-
     public ArrayList<Task> loadTaskList() {
         return new ArrayList<>(tasks);
+    }
+
+    public void saveTaskList(ArrayList<Task> taskList) {
+        return;
     }
 }

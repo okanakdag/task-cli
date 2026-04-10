@@ -14,7 +14,8 @@ public class TaskService {
     }
 
     public void addTask(String description) {
-        repository.addTask(new Task(nextId(), description));
+        taskList.add(new Task(nextId(), description));
+        repository.saveTaskList(taskList);
     }
 
     public void list() {
@@ -28,24 +29,23 @@ public class TaskService {
     }
 
     public void updateDescription(String id, String description) {
-        Task task = taskById(id);
-        task.updateDescription(description);
-
-        repository.deleteTaskById(task.getId());
-        repository.addTask(task);
+        taskById(id).updateDescription(description);
+        repository.saveTaskList(taskList);
     }
 
     public void deleteTask(String id) {
-        Task task = taskById(id);
-        repository.deleteTaskById(task.getId());
+        taskList.remove(taskById(id));
+        repository.saveTaskList(taskList);
     }
 
     public void markInProgress(String id) {
         taskById(id).updateStatus(Status.IN_PROGRESS);
+        repository.saveTaskList(taskList);
     }
 
     public void markDone(String id) {
         taskById(id).updateStatus(Status.DONE);
+        repository.saveTaskList(taskList);
     }
 
     private int nextId() {
