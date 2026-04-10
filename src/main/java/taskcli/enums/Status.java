@@ -24,7 +24,7 @@ public enum Status {
 
         try {
             return Status.valueOf(text);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             throw new IllegalArgumentException("Unknown status: " + text);
         }
     }

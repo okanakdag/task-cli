@@ -58,7 +58,7 @@ public class TaskService {
     private int convertId(String idString) {
         try {
             return Integer.valueOf(idString);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             throw new IllegalArgumentException("Invalid task id: " + idString);
         }
     }
