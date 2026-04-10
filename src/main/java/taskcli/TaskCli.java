@@ -1,5 +1,6 @@
 package taskcli;
 import taskcli.enums.Command;
+import taskcli.enums.Status;
 import taskcli.repository.TestRepository;
 
 public class TaskCli {
@@ -43,7 +44,7 @@ public class TaskCli {
                 break;
             case LIST:
                 if ((args.length == 2)) {
-                    taskService.list(args[1]);
+                    taskService.list(Status.fromString(args[1]));
                 } else {
                     taskService.list();
                 }
@@ -80,6 +81,7 @@ public class TaskCli {
               task-cli delete 1
               task-cli list
               task-cli list done
+              task-cli list in-progress
               task-cli mark-in-progress 2
               task-cli mark-done 2
             """);

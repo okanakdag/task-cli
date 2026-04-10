@@ -2,6 +2,7 @@ package taskcli.repository;
 import java.util.ArrayList;
 
 import taskcli.Task;
+import taskcli.enums.Status;
 
 // In memory repository for testing
 public class TestRepository implements TaskRepository {
@@ -15,8 +16,8 @@ public class TestRepository implements TaskRepository {
         Task task2 = new Task(2, "Finish Java practice project");
         Task task3 = new Task(3, "Read about exceptions and testing");
 
-        task2.updateStatus("IN_PROGRESS");
-        task3.updateStatus("DONE");
+        task2.updateStatus(Status.IN_PROGRESS);
+        task3.updateStatus(Status.DONE);
 
         tasks.add(task1);
         tasks.add(task2);

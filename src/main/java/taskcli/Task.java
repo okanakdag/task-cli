@@ -33,8 +33,8 @@ public class Task {
         this.updatedAt = updatedAt;
     }
 
-    public void updateStatus(String status) {
-        this.status = Status.valueOf(status);
+    public void updateStatus(Status status) {
+        this.status = status;
         this.updatedAt = LocalDateTime.now();
     }
 
