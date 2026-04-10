@@ -1,7 +1,7 @@
+package taskcli.repository;
 import java.util.ArrayList;
 
 import taskcli.Task;
-import taskcli.repository.TaskRepository;
 
 // In memory repository for testing
 public class TestRepository implements TaskRepository {

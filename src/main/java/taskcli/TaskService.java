@@ -5,25 +5,19 @@ import taskcli.repository.TaskRepository;
 
 public class TaskService {
     private ArrayList<Task> taskList;
-    private TaskRepository storage;
+    private TaskRepository repository;
 
-    public TaskService() {
-        this.taskList = new ArrayList<Task>();
-        this.storage = new TaskRepository();
-        this.loadTaskList();
+    public TaskService(TaskRepository repository) {
+        this.repository = repository;
+        this.taskList = repository.loadTaskList();
     }
 
-    private void loadTaskList() {
-
-    }
-
-    // Commands
     public void addTask(String description) {
-
+        repository.addTask(new Task(nextId(), description));
     }
 
     public void list() {
-
+        taskList.forEach(System.out::println);
     }
 
     public void list(String status) {
@@ -40,5 +34,12 @@ public class TaskService {
     }
 
     public void markDone(String id) {
+    }
+
+    private int nextId() {
+        return taskList.stream()
+            .mapToInt(Task::getId)
+            .max()
+            .orElse(0) + 1;
     }
 }
