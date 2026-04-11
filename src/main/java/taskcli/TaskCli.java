@@ -1,6 +1,7 @@
 package taskcli;
 import taskcli.enums.Command;
 import taskcli.enums.Status;
+import taskcli.exception.StorageException;
 import taskcli.repository.TestRepository;
 
 public class TaskCli {
@@ -8,7 +9,7 @@ public class TaskCli {
     public static void main(String[] args) {
         try {
             parseCommand(args);
-        } catch(IllegalArgumentException e) {
+        } catch(IllegalArgumentException | StorageException e) {
             System.out.println(e.getMessage());
         }
     }
