@@ -33,16 +33,10 @@ public class TaskRepositoryImpl implements TaskRepository{
             Path dataPath = Paths.get("data", "tasks.json");
             Path tempPath = Paths.get("data", "tasks.tmp.json");
             Files.createDirectories(dataPath.getParent());
-            Files.writeString(tempPath, serializeTaskList(taskList));
+            Files.writeString(tempPath, taskJsonmapper.serializeTaskList(taskList));
             Files.move(tempPath, dataPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new StorageException("Storage error", e);
         }
-    }
-
-    private String serializeTaskList(List<Task> taskList) {
-        return taskList.stream()
-                .map(taskJsonmapper::toJson)
-                .collect(Collectors.joining(",\n", "[\n", "\n]"));
     }
 }
