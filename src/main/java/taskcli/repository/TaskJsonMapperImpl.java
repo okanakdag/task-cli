@@ -8,12 +8,15 @@ import taskcli.Task;
 import taskcli.exception.StorageException;
 
 public class TaskJsonMapperImpl implements TaskJsonMapper{
+
+    @Override
     public String serializeTaskList(List<Task> tasks) {
         return tasks.stream()
             .map(this::taskToJson)
             .collect(Collectors.joining(",\n", "[\n", "\n]"));
     }
 
+    @Override
     public ArrayList<Task> parseJson(String json) {
         ArrayList<Task> tasks = new ArrayList<>();
 
