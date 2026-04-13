@@ -1,7 +1,10 @@
 package taskcli.repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import taskcli.Task;
@@ -67,6 +70,34 @@ public class TaskJsonMapperImpl implements TaskJsonMapper{
     }
 
     private Task jsonToTask(String json) {
+        try {
+            int id = Integer.parseInt(extractJsonValue(json, "id"));
+            String description = unescapeJson(extractJsonValue(json, "description"));
+            String status = extractJsonValue(json, "status");
+            LocalDateTime createdAt = LocalDateTime.parse(extractJsonValue(json, "createdAt"));
+            LocalDateTime updatedAt = LocalDateTime.parse(extractJsonValue(json, "updatedAt"));
 
+            return new Task(id, description, status, createdAt, updatedAt);
+        } catch (RuntimeException e) {
+            throw new StorageException("Invalid task JSON: " + json, e);
+        }
+    }
+
+    private String extractJsonValue(String json, String key) {
+        Pattern pattern = Pattern.compile("\"" + Pattern.quote(key) + "\"\\s*:\\s*(\"((?:\\\\.|[^\"])*)\"|([^,}\\s]+))");
+        Matcher matcher = pattern.matcher(json);
+
+        if (!matcher.find()) {
+            throw new StorageException("Missing field: " + key, null);
+        }
+
+        String quotedValue = matcher.group(2);
+        return quotedValue != null ? quotedValue : matcher.group(3);
+    }
+
+    private String unescapeJson(String text) {
+        return text
+            .replace("\\\"", "\"")
+            .replace("\\\\", "\\");
     }
 }

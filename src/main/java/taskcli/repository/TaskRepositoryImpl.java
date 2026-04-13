@@ -1,19 +1,19 @@
 package taskcli.repository;
 
-import java.util.ArrayList;
 import java.io.IOException;
 import java.nio.file.*;
-
+import java.util.ArrayList;
 import taskcli.Task;
 import taskcli.exception.StorageException;
 
 public class TaskRepositoryImpl implements TaskRepository{
-    private TaskJsonMapper mapper;
+    private final TaskJsonMapper mapper;
 
     public TaskRepositoryImpl(TaskJsonMapper mapper) {
         this.mapper = mapper;
     }
 
+    @Override
     public ArrayList<Task> loadTaskList() {
         Path dataPath = Paths.get("data", "tasks.json");
         
@@ -28,6 +28,7 @@ public class TaskRepositoryImpl implements TaskRepository{
         }
     }
 
+    @Override
     public void saveTaskList(ArrayList<Task> taskList) {
         try {
             Path dataPath = Paths.get("data", "tasks.json");
