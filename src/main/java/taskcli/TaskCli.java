@@ -2,7 +2,7 @@ package taskcli;
 import taskcli.enums.Command;
 import taskcli.enums.Status;
 import taskcli.exception.StorageException;
-import taskcli.repository.TestRepository;
+import taskcli.repository.TaskRepositoryImpl;
 
 public class TaskCli {
 
@@ -31,7 +31,7 @@ public class TaskCli {
             throw new IllegalArgumentException("Too many arguments for command: " + args[0]);
         }
 
-        TaskService taskService = new TaskService(new TestRepository());
+        TaskService taskService = new TaskService(new TaskRepositoryImpl());
 
         switch (command) {
             case ADD:

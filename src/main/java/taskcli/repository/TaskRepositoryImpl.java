@@ -9,8 +9,8 @@ import taskcli.exception.StorageException;
 public class TaskRepositoryImpl implements TaskRepository{
     private final TaskJsonMapper mapper;
 
-    public TaskRepositoryImpl(TaskJsonMapper mapper) {
-        this.mapper = mapper;
+    public TaskRepositoryImpl() {
+        this.mapper = new TaskJsonMapperImpl();
     }
 
     @Override
