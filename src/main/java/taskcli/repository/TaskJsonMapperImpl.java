@@ -35,9 +35,8 @@ public class TaskJsonMapperImpl implements TaskJsonMapper{
 
         String[] jsonParts = innerJson.split("\\},\\s*\\{");
 
-        for (int i = 0; i < jsonParts.length; i++) {
-            String part = jsonParts[i].trim();
-
+        for (String jsonPart : jsonParts) {
+            String part = jsonPart.trim();
             // split function removes braces, so it's added back here
             if (!part.startsWith("{")) {
                 part = "{" + part;
@@ -45,15 +44,15 @@ public class TaskJsonMapperImpl implements TaskJsonMapper{
             if (!part.endsWith("}")) {
                 part = part + "}";
             }
-
             tasks.add(jsonToTask(part));
         }
         return tasks;
     }
 
     private String taskToJson(Task task) {
-        return "{\n" +
-            "  \"id\": " + task.getId() + ",\n" +
+        return """
+               {
+                 "id": """ + task.getId() + ",\n" +
             "  \"description\": \"" + escapeJson(task.getDescription()) + "\",\n" +
             "  \"status\": \"" + task.getStatus().name() + "\",\n" +
             "  \"createdAt\": \"" + task.getCreatedAt() + "\",\n" +
