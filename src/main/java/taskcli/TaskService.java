@@ -1,12 +1,11 @@
 package taskcli;
 import java.util.ArrayList;
-
-import taskcli.repository.TaskRepository;
 import taskcli.enums.Status;
+import taskcli.repository.TaskRepository;
 
 public class TaskService {
-    private ArrayList<Task> taskList;
-    private TaskRepository repository;
+    private final ArrayList<Task> taskList;
+    private final TaskRepository repository;
 
     public TaskService(TaskRepository repository) {
         this.repository = repository;
@@ -28,22 +27,22 @@ public class TaskService {
             .forEach(System.out::println);
     }
 
-    public void updateDescription(String id, String description) {
+    public void updateDescription(int id, String description) {
         taskById(id).updateDescription(description);
         repository.saveTaskList(taskList);
     }
 
-    public void deleteTask(String id) {
+    public void deleteTask(int id) {
         taskList.remove(taskById(id));
         repository.saveTaskList(taskList);
     }
 
-    public void markInProgress(String id) {
+    public void markInProgress(int id) {
         taskById(id).updateStatus(Status.IN_PROGRESS);
         repository.saveTaskList(taskList);
     }
 
-    public void markDone(String id) {
+    public void markDone(int id) {
         taskById(id).updateStatus(Status.DONE);
         repository.saveTaskList(taskList);
     }
@@ -55,16 +54,7 @@ public class TaskService {
             .orElse(0) + 1;
     }
 
-    private int convertId(String idString) {
-        try {
-            return Integer.valueOf(idString);
-        } catch (NumberFormatException _) {
-            throw new IllegalArgumentException("Invalid task id: " + idString);
-        }
-    }
-
-    private Task taskById(String idString) {
-        int id = convertId(idString);
+    private Task taskById(int id) {
         for (Task task : taskList) {
             if (task.getId() == id) {
                 return task;

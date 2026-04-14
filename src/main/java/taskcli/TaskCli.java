@@ -38,10 +38,10 @@ public class TaskCli {
                 taskService.addTask(args[1]);
                 break;
             case UPDATE:
-                taskService.updateDescription(args[1], args[2]);
+                taskService.updateDescription(convertId(args[1]), args[2]);
                 break;
             case DELETE:
-                taskService.deleteTask(args[1]);
+                taskService.deleteTask(convertId(args[1]));
                 break;
             case LIST:
                 if ((args.length == 2)) {
@@ -51,10 +51,10 @@ public class TaskCli {
                 }
                 break;
             case MARK_IN_PROGRESS:
-                taskService.markInProgress(args[1]);
+                taskService.markInProgress(convertId(args[1]));
                 break;
             case MARK_DONE:
-                taskService.markDone(args[1]);
+                taskService.markDone(convertId(args[1]));
                 break;
             case HELP:
                 help();
@@ -86,5 +86,13 @@ public class TaskCli {
               task-cli mark-in-progress 2
               task-cli mark-done 2
             """);
+    }
+
+    private static int convertId(String idString) {
+        try {
+            return Integer.parseInt(idString);
+        } catch (NumberFormatException _) {
+            throw new IllegalArgumentException("Invalid task id: " + idString);
+        }
     }
 }
