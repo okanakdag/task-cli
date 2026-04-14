@@ -36,31 +36,13 @@ public class TaskCli {
         TaskService taskService = new TaskService(new TaskRepositoryImpl());
 
         switch (command) {
-            case ADD:
-                taskService.addTask(args[1]);
-                break;
-            case UPDATE:
-                taskService.updateDescription(convertId(args[1]), args[2]);
-                break;
-            case DELETE:
-                taskService.deleteTask(convertId(args[1]));
-                break;
-            case LIST:
-                if ((args.length == 2)) {
-                    printTaskList(taskService.list(Status.fromString(args[1])));
-                } else {
-                    printTaskList(taskService.list());
-                }
-                break;
-            case MARK_IN_PROGRESS:
-                taskService.markInProgress(convertId(args[1]));
-                break;
-            case MARK_DONE:
-                taskService.markDone(convertId(args[1]));
-                break;
-            case HELP:
-                help();
-                break;
+            case ADD -> taskService.addTask(args[1]);
+            case UPDATE -> taskService.updateDescription(convertId(args[1]), args[2]);
+            case DELETE -> taskService.deleteTask(convertId(args[1]));
+            case LIST -> callList(args, taskService);
+            case MARK_IN_PROGRESS -> taskService.markInProgress(convertId(args[1]));
+            case MARK_DONE -> taskService.markDone(convertId(args[1]));
+            case HELP -> help();
         }
     }
 
@@ -88,6 +70,15 @@ public class TaskCli {
               task-cli mark-in-progress 2
               task-cli mark-done 2
             """);
+    }
+
+    private static void callList(String[] args, TaskService taskService) {
+        if ((args.length == 2)) {
+            printTaskList(taskService.list(Status.fromString(args[1])));
+        } else {
+            printTaskList(taskService.list());
+        }
+
     }
 
     private static int convertId(String idString) {
