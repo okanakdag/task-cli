@@ -1,6 +1,5 @@
 package taskcli;
 import java.time.LocalDateTime;
-
 import taskcli.enums.Status;
 
 public class Task {
@@ -45,15 +44,6 @@ public class Task {
 
     public boolean isDone() {
         return status == Status.DONE;
-    }
-
-    @Override
-    public String toString(){
-        return "Task id: " + id +
-                "\nDescription: " + description +
-                "\nStatus: " + status +
-                "\nCreated at " + createdAt +
-                "\nLast updated at " + updatedAt;
     }
 
     // Getters

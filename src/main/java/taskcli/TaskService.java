@@ -1,5 +1,6 @@
 package taskcli;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import taskcli.enums.Status;
 import taskcli.repository.TaskRepository;
 
@@ -17,14 +18,14 @@ public class TaskService {
         repository.saveTaskList(taskList);
     }
 
-    public void list() {
-        taskList.forEach(System.out::println);
+    public ArrayList<Task> list() {
+        return new ArrayList<>(taskList);
     }
 
-    public void list(Status status) {
-        taskList.stream()
+    public ArrayList<Task> list(Status status) {
+        return taskList.stream()
             .filter(task -> task.getStatus() == status)
-            .forEach(System.out::println);
+            .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void updateDescription(int id, String description) {

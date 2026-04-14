@@ -1,4 +1,5 @@
 package taskcli;
+import java.util.ArrayList;
 import taskcli.enums.Command;
 import taskcli.enums.Status;
 import taskcli.exception.StorageException;
@@ -45,9 +46,9 @@ public class TaskCli {
                 break;
             case LIST:
                 if ((args.length == 2)) {
-                    taskService.list(Status.fromString(args[1]));
+                    printTaskList(taskService.list(Status.fromString(args[1])));
                 } else {
-                    taskService.list();
+                    printTaskList(taskService.list());
                 }
                 break;
             case MARK_IN_PROGRESS:
@@ -94,5 +95,17 @@ public class TaskCli {
         } catch (NumberFormatException _) {
             throw new IllegalArgumentException("Invalid task id: " + idString);
         }
+    }
+
+    private static void printTaskList(ArrayList<Task> tasks) {
+        tasks.forEach(task -> System.out.println(formatTask(task) + "\n"));
+    }
+
+    private static String formatTask(Task task) {
+        return "Task id: " + task.getId() +
+                "\nDescription: " + task.getDescription() +
+                "\nStatus: " + task.getStatus() +
+                "\nCreated at " + task.getCreatedAt() +
+                "\nLast updated at " + task.getUpdatedAt();
     }
 }
