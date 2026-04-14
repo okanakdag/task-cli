@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import taskcli.enums.Command;
 import taskcli.enums.Status;
 import taskcli.exception.StorageException;
+import taskcli.exception.TaskNotFoundException;
 import taskcli.repository.TaskRepositoryImpl;
 
 public class TaskCli {
@@ -10,7 +11,7 @@ public class TaskCli {
     public static void main(String[] args) {
         try {
             parseCommand(args);
-        } catch(IllegalArgumentException | StorageException e) {
+        } catch(IllegalArgumentException | StorageException | TaskNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }

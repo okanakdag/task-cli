@@ -2,6 +2,7 @@ package taskcli;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import taskcli.enums.Status;
+import taskcli.exception.TaskNotFoundException;
 import taskcli.repository.TaskRepository;
 
 public class TaskService {
@@ -62,6 +63,6 @@ public class TaskService {
             }
         }
 
-        throw new IllegalArgumentException("Task not found: " + id);
+        throw new TaskNotFoundException("Task with id " + id + " not found");
     }
 }
