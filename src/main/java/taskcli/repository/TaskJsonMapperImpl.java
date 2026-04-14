@@ -26,7 +26,7 @@ public class TaskJsonMapperImpl implements TaskJsonMapper{
 
         
         if (!json.startsWith("[") || !json.endsWith("]")) {
-            throw new StorageException("Invalid JSON array", null);
+            throw new StorageException("Storage file contains Invalid JSON array", null);
         }
 
         String innerJson = json.substring(1, json.length() - 1).trim();
@@ -69,17 +69,12 @@ public class TaskJsonMapperImpl implements TaskJsonMapper{
     }
 
     private Task jsonToTask(String json) {
-        try {
-            int id = Integer.parseInt(extractJsonValue(json, "id"));
-            String description = unescapeJson(extractJsonValue(json, "description"));
-            String status = extractJsonValue(json, "status");
-            LocalDateTime createdAt = LocalDateTime.parse(extractJsonValue(json, "createdAt"));
-            LocalDateTime updatedAt = LocalDateTime.parse(extractJsonValue(json, "updatedAt"));
-
-            return new Task(id, description, status, createdAt, updatedAt);
-        } catch (RuntimeException e) {
-            throw new StorageException("Invalid task JSON: " + json, e);
-        }
+        int id = Integer.parseInt(extractJsonValue(json, "id"));
+        String description = unescapeJson(extractJsonValue(json, "description"));
+        String status = extractJsonValue(json, "status");
+        LocalDateTime createdAt = LocalDateTime.parse(extractJsonValue(json, "createdAt"));
+        LocalDateTime updatedAt = LocalDateTime.parse(extractJsonValue(json, "updatedAt"));
+        return new Task(id, description, status, createdAt, updatedAt);
     }
 
     private String extractJsonValue(String json, String key) {
@@ -87,7 +82,7 @@ public class TaskJsonMapperImpl implements TaskJsonMapper{
         Matcher matcher = pattern.matcher(json);
 
         if (!matcher.find()) {
-            throw new StorageException("Missing field: " + key, null);
+            throw new StorageException("Storage file can't be parsed", null);
         }
 
         String quotedValue = matcher.group(2);
