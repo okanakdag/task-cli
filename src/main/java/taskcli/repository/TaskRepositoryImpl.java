@@ -3,6 +3,7 @@ package taskcli.repository;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.List;
 import taskcli.Task;
 import taskcli.exception.StorageException;
 
@@ -14,7 +15,7 @@ public class TaskRepositoryImpl implements TaskRepository{
     }
 
     @Override
-    public ArrayList<Task> loadTaskList() {
+    public List<Task> loadTaskList() {
         Path dataPath = Paths.get("data", "tasks.json");
         
         if (Files.notExists(dataPath)) {
@@ -29,7 +30,7 @@ public class TaskRepositoryImpl implements TaskRepository{
     }
 
     @Override
-    public void saveTaskList(ArrayList<Task> taskList) {
+    public void saveTaskList(List<Task> taskList) {
         try {
             Path dataPath = Paths.get("data", "tasks.json");
             Path tempPath = Paths.get("data", "tasks.tmp.json");

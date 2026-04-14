@@ -19,7 +19,7 @@ public class TaskJsonMapperImpl implements TaskJsonMapper{
     }
 
     @Override
-    public ArrayList<Task> parseJson(String json) {
+    public List<Task> parseJson(String json) {
         ArrayList<Task> tasks = new ArrayList<>();
 
         json = json.trim();

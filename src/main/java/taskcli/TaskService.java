@@ -1,12 +1,13 @@
 package taskcli;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import taskcli.enums.Status;
 import taskcli.exception.TaskNotFoundException;
 import taskcli.repository.TaskRepository;
 
 public class TaskService {
-    private final ArrayList<Task> taskList;
+    private final List<Task> taskList;
     private final TaskRepository repository;
 
     public TaskService(TaskRepository repository) {
@@ -19,11 +20,11 @@ public class TaskService {
         repository.saveTaskList(taskList);
     }
 
-    public ArrayList<Task> list() {
+    public List<Task> list() {
         return new ArrayList<>(taskList);
     }
 
-    public ArrayList<Task> list(Status status) {
+    public List<Task> list(Status status) {
         return taskList.stream()
             .filter(task -> task.getStatus() == status)
             .collect(Collectors.toCollection(ArrayList::new));

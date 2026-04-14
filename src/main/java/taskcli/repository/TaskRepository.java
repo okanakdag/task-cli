@@ -1,12 +1,11 @@
 package taskcli.repository;
 
-import java.util.ArrayList;
-
+import java.util.List;
 import taskcli.Task;
 
 public interface TaskRepository {
 
-    ArrayList<Task> loadTaskList();
+    List<Task> loadTaskList();
 
-    void saveTaskList(ArrayList<Task> taskList);
+    void saveTaskList(List<Task> taskList);
 }

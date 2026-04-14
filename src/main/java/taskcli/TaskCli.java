@@ -1,5 +1,5 @@
 package taskcli;
-import java.util.ArrayList;
+import java.util.List;
 import taskcli.enums.Command;
 import taskcli.enums.Status;
 import taskcli.exception.StorageException;
@@ -98,7 +98,7 @@ public class TaskCli {
         }
     }
 
-    private static void printTaskList(ArrayList<Task> tasks) {
+    private static void printTaskList(List<Task> tasks) {
         tasks.forEach(task -> System.out.println(formatTask(task) + "\n"));
     }
 
