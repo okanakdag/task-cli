@@ -1,4 +1,5 @@
 package taskcli;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import taskcli.enums.Command;
 import taskcli.enums.Status;
@@ -90,14 +91,29 @@ public class TaskCli {
     }
 
     private static void printTaskList(List<Task> tasks) {
-        tasks.forEach(task -> System.out.println(formatTask(task) + "\n"));
+        tasks.forEach(task -> {
+            System.out.println(formatTask(task));
+            System.out.println("----------------------------------------");
+    });
     }
+    
+    private static final DateTimeFormatter DATE_FORMAT =
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private static String formatTask(Task task) {
-        return "Task id: " + task.getId() +
-                "\nDescription: " + task.getDescription() +
-                "\nStatus: " + task.getStatus() +
-                "\nCreated at " + task.getCreatedAt() +
-                "\nLast updated at " + task.getUpdatedAt();
+
+        return """
+            Task #%d
+            Description : %s
+            Status      : %s
+            Created At  : %s
+            Updated At  : %s
+            """.formatted(
+            task.getId(),
+            task.getDescription(),
+            task.getStatus(),
+            task.getCreatedAt().format(DATE_FORMAT),
+            task.getUpdatedAt().format(DATE_FORMAT)
+            ).stripTrailing();
     }
 }
