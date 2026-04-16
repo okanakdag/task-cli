@@ -5,19 +5,29 @@ import taskcli.enums.Command;
 import taskcli.enums.Status;
 import taskcli.exception.StorageException;
 import taskcli.exception.TaskNotFoundException;
+import taskcli.repository.TaskRepository;
 import taskcli.repository.TaskRepositoryImpl;
 
 public class TaskCli {
 
+    public final TaskService taskService;
+
+    public TaskCli(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
     public static void main(String[] args) {
         try {
-            parseCommand(args);
+            TaskRepository taskRepository = new TaskRepositoryImpl();
+            TaskService taskService = new TaskService(taskRepository);
+            TaskCli taskCli = new TaskCli(taskService);
+            taskCli.parseCommand(args);
         } catch(IllegalArgumentException | StorageException | TaskNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public static void parseCommand(String[] args) {
+    public void parseCommand(String[] args) {
         if (args.length == 0) {
             throw new IllegalArgumentException("Missing command. Use: task-cli help");
         }
@@ -33,8 +43,6 @@ public class TaskCli {
         if (command.getMaxArgs() < args.length) {
             throw new IllegalArgumentException("Too many arguments for command: " + args[0]);
         }
-
-        TaskService taskService = new TaskService(new TaskRepositoryImpl());
 
         switch (command) {
             case ADD -> taskService.addTask(args[1]);
@@ -96,7 +104,7 @@ public class TaskCli {
             System.out.println("----------------------------------------");
     });
     }
-    
+
     private static final DateTimeFormatter DATE_FORMAT =
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
