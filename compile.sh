@@ -6,7 +6,10 @@ OUT_DIR="${1:-$ROOT_DIR/out}"
 
 mkdir -p "$OUT_DIR"
 
-mapfile -t JAVA_FILES < <(find "$ROOT_DIR/src/main/java" -name '*.java' | sort)
+JAVA_FILES=()
+while IFS= read -r file; do
+  JAVA_FILES+=("$file")
+done < <(find "$ROOT_DIR/src/main/java" -name '*.java' | sort)
 
 if [ "${#JAVA_FILES[@]}" -eq 0 ]; then
   echo "No Java source files found."
