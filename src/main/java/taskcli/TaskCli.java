@@ -1,62 +1,41 @@
 package taskcli;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import taskcli.cli.CommandParser;
+import taskcli.cli.TaskPrinter;
 import taskcli.enums.Command;
 import taskcli.enums.Status;
-import taskcli.exception.StorageException;
-import taskcli.exception.TaskNotFoundException;
-import taskcli.repository.TaskRepository;
-import taskcli.repository.TaskRepositoryImpl;
 
 public class TaskCli {
 
-    public final TaskService taskService;
+    private  final TaskService taskService;
+    private final String[] args;
 
-    public TaskCli(TaskService taskService) {
+    public TaskCli(TaskService taskService, String[] args) {
         this.taskService = taskService;
+        this.args = args;
     }
 
-    public static void main(String[] args) {
-        try {
-            TaskRepository taskRepository = new TaskRepositoryImpl();
-            TaskService taskService = new TaskService(taskRepository);
-            TaskCli taskCli = new TaskCli(taskService);
-            taskCli.parseCommand(args);
-        } catch(IllegalArgumentException | StorageException | TaskNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void parseCommand(String[] args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("Missing command. Use: task-cli help");
-        }
-        if (args.length > 3) {
-            throw new IllegalArgumentException("Too many arguments. Use: task-cli help");
-        }
-
-        Command command = Command.fromString(args[0]);
-
-        if (command.getMinArgs() > args.length) {
-            throw new IllegalArgumentException("Missing arguments for command: " + args[0]);
-        }
-        if (command.getMaxArgs() < args.length) {
-            throw new IllegalArgumentException("Too many arguments for command: " + args[0]);
-        }
-
+    public void run() {
+        Command command = CommandParser.parse(args);
         switch (command) {
             case ADD -> taskService.addTask(args[1]);
             case UPDATE -> taskService.updateDescription(convertId(args[1]), args[2]);
             case DELETE -> taskService.deleteTask(convertId(args[1]));
-            case LIST -> callList(args, taskService);
+            case LIST -> callList();
             case MARK_IN_PROGRESS -> taskService.markInProgress(convertId(args[1]));
             case MARK_DONE -> taskService.markDone(convertId(args[1]));
-            case HELP -> help();
+            case HELP -> System.out.println(HELP_TEXT);
         }
     }
 
-    private static void help() {
-        System.out.println("""
+    private void callList() {
+        if ((args.length == 2)) {
+            TaskPrinter.printTaskList(taskService.list(Status.fromString(args[1])));
+        } else {
+            TaskPrinter.printTaskList(taskService.list());
+        }
+    }
+
+    private static final String HELP_TEXT = """
             Usage:
               task-cli <command> [arguments]
             
@@ -78,17 +57,7 @@ public class TaskCli {
               task-cli list in-progress
               task-cli mark-in-progress 2
               task-cli mark-done 2
-            """);
-    }
-
-    private static void callList(String[] args, TaskService taskService) {
-        if ((args.length == 2)) {
-            printTaskList(taskService.list(Status.fromString(args[1])));
-        } else {
-            printTaskList(taskService.list());
-        }
-
-    }
+            """;
 
     private static int convertId(String idString) {
         try {
@@ -96,32 +65,5 @@ public class TaskCli {
         } catch (NumberFormatException _) {
             throw new IllegalArgumentException("Invalid task id: " + idString);
         }
-    }
-
-    private static void printTaskList(List<Task> tasks) {
-        tasks.forEach(task -> {
-            System.out.println(formatTask(task));
-            System.out.println("----------------------------------------");
-    });
-    }
-
-    private static final DateTimeFormatter DATE_FORMAT =
-        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-    private static String formatTask(Task task) {
-
-        return """
-            Task #%d
-            Description : %s
-            Status      : %s
-            Created At  : %s
-            Updated At  : %s
-            """.formatted(
-            task.getId(),
-            task.getDescription(),
-            task.getStatus(),
-            task.getCreatedAt().format(DATE_FORMAT),
-            task.getUpdatedAt().format(DATE_FORMAT)
-            ).stripTrailing();
     }
 }

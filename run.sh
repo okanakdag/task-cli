@@ -10,4 +10,4 @@ if [ ! -d "$OUT_DIR" ]; then
 fi
 
 cd "$ROOT_DIR"
-java -cp "$OUT_DIR" taskcli.TaskCli "$@"
+java -cp "$OUT_DIR" taskcli.Main "$@"
