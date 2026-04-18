@@ -28,11 +28,11 @@ This project is my Java implementation of the [Task Tracker](https://roadmap.sh/
 
 ## Project Structure
 
-- [src/main/java/taskcli/Main.java](/D:/okan/Projects/side-projects/task-cli/src/main/java/taskcli/Main.java): application entry point
-- [src/main/java/taskcli/TaskCli.java](/D:/okan/Projects/side-projects/task-cli/src/main/java/taskcli/TaskCli.java): CLI command dispatch
-- [src/main/java/taskcli/TaskService.java](/D:/okan/Projects/side-projects/task-cli/src/main/java/taskcli/TaskService.java): task operations
-- [src/main/java/taskcli/repository/TaskRepositoryImpl.java](/D:/okan/Projects/side-projects/task-cli/src/main/java/taskcli/repository/TaskRepositoryImpl.java): file-based persistence
-- [src/main/java/taskcli/repository/TaskJsonMapperImpl.java](/D:/okan/Projects/side-projects/task-cli/src/main/java/taskcli/repository/TaskJsonMapperImpl.java): JSON serialization/parsing
+- `Main.java`: application entry point
+- `TaskCli.java`: CLI command dispatch
+- `TaskService.java`: task operations
+- `repository/TaskRepositoryImpl.java`: file-based persistence
+- `repository/TaskJsonMapperImpl.java`: JSON serialization/parsing
 
 ## Build And Run
 
